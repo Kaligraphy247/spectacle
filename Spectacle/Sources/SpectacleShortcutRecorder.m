@@ -17,6 +17,12 @@ static const NSEventModifierFlags kCocoaModifierFlagsMask = (NSEventModifierFlag
                                                              | NSEventModifierFlagShift
                                                              | NSEventModifierFlagCommand);
 
+static const CGFloat kFieldCornerRadius = 6.0f;
+
+static const CGFloat kBadgeSize = 12.0f;
+
+static const CGFloat kLabelPadding = 4.0f;
+
 @implementation SpectacleShortcutRecorder
 {
   BOOL _isRecording;
@@ -147,11 +153,9 @@ static const NSEventModifierFlags kCocoaModifierFlagsMask = (NSEventModifierFlag
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  // Since the macOS 14 SDK the dirty rect may extend past the view, so the pill is drawn from the bounds.
+  // Since the macOS 14 SDK the dirty rect may extend past the view, so the field is drawn from the bounds.
   NSRect rect = self.bounds;
-  CGFloat radius = NSHeight(rect) / 2.0f;
-  [self _drawBorderInRect:rect withRadius:radius];
-  [self _drawBackgroundInRect:rect withRadius:radius];
+  [self _drawBackgroundInRect:rect];
   [self _drawBadgeInRect:rect];
   [self _drawLabelInRect:rect];
 }
@@ -200,95 +204,47 @@ static const NSEventModifierFlags kCocoaModifierFlagsMask = (NSEventModifierFlag
   }
 }
 
-- (void)_drawBorderInRect:(NSRect)rect withRadius:(CGFloat)radius
+- (void)_drawBackgroundInRect:(NSRect)rect
 {
-  NSBezierPath *roundedPath = [NSBezierPath bezierPathWithRoundedRect:rect xRadius:radius yRadius:radius];
-  [NSGraphicsContext.currentContext saveGraphicsState];
-  [roundedPath addClip];
-  [NSColor.separatorColor set];
-  [NSBezierPath fillRect:rect];
-  [NSGraphicsContext.currentContext restoreGraphicsState];
-}
-
-- (void)_drawBackgroundInRect:(NSRect)rect withRadius:(CGFloat)radius
-{
-  NSBezierPath *roundedPath = [NSBezierPath bezierPathWithRoundedRect:NSInsetRect(rect, 1.0f, 1.0f)
-                                                              xRadius:radius
-                                                              yRadius:radius];
-  NSColor *gradientStartingColor = nil;
-  NSColor *gradientEndingColor = nil;
-  NSGradient *gradient = nil;
-  [NSGraphicsContext.currentContext saveGraphicsState];
-  [roundedPath addClip];
+  NSRect fieldRect = NSInsetRect(rect, 0.5f, 0.5f);
+  NSBezierPath *fieldPath = [NSBezierPath bezierPathWithRoundedRect:fieldRect xRadius:kFieldCornerRadius yRadius:kFieldCornerRadius];
+  NSColor *fillColor = NSColor.controlBackgroundColor;
+  NSColor *strokeColor = NSColor.separatorColor;
   if (_isRecording) {
-    gradientStartingColor = [NSColor colorWithDeviceRed:0.784f green:0.953f blue:1.0f alpha:1.0f];
-    gradientEndingColor = [NSColor colorWithDeviceRed:0.694f green:0.859f blue:1.0f alpha:1.0f];
-  } else {
-    gradientStartingColor = [[[NSColor whiteColor] shadowWithLevel:0.2f] colorWithAlphaComponent:0.9f];
-    gradientEndingColor = [[[NSColor whiteColor] highlightWithLevel:0.2f] colorWithAlphaComponent:0.9f];
+    fillColor = [NSColor.controlBackgroundColor blendedColorWithFraction:0.15f ofColor:NSColor.controlAccentColor];
+    strokeColor = NSColor.controlAccentColor;
+  } else if (_isMouseDown && !_isMouseAboveBadge) {
+    fillColor = NSColor.unemphasizedSelectedContentBackgroundColor;
   }
-  if (!_isRecording && _isMouseDown && !_isMouseAboveBadge) {
-    gradient = [[NSGradient alloc] initWithStartingColor:gradientEndingColor endingColor:gradientStartingColor];
-  } else {
-    gradient = [[NSGradient alloc] initWithStartingColor:gradientStartingColor endingColor:gradientEndingColor];
-  }
-  [gradient drawInRect:rect angle:90.0f];
-  [NSGraphicsContext.currentContext restoreGraphicsState];
+  [fillColor setFill];
+  [fieldPath fill];
+  fieldPath.lineWidth = _isRecording ? 1.5f : 1.0f;
+  [strokeColor setStroke];
+  [fieldPath stroke];
 }
 
 - (void)_drawBadgeInRect:(NSRect)rect
 {
-  NSRect badgeRect = badgeRectInBounds(rect);
+  NSString *symbolName = nil;
   if ((_isRecording && !_shortcut) || (!_isRecording && _shortcut)) {
-    [self _drawCancelOrClearShortcutBadgeInRect:badgeRect opacity:(_isMouseAboveBadge && _isMouseDown) ? 0.50 : 0.25f];
+    symbolName = @"xmark.circle.fill";
   } else if (_isRecording) {
-    [self _drawRevertShortcutBadgeInRect:badgeRect];
+    symbolName = @"arrow.uturn.backward.circle.fill";
+  } else {
+    return;
   }
-}
-
-- (void)_drawCancelOrClearShortcutBadgeInRect:(NSRect)rect opacity:(CGFloat)opacity
-{
-  CGFloat horizontalScale = (rect.size.width / 13.0f);
-  CGFloat verticalScale = (rect.size.height / 13.0f);
-  [NSGraphicsContext.currentContext saveGraphicsState];
-  [[NSColor colorWithCalibratedWhite:0.0f alpha:opacity] setFill];
-  [[NSBezierPath bezierPathWithOvalInRect:rect] fill];
-  [[NSColor whiteColor] setStroke];
-  NSBezierPath *cross = [NSBezierPath new];
-  [cross setLineWidth:horizontalScale * 1.4f];
-  [cross moveToPoint:relativePointInRect(4.0f, 4.0f, rect, horizontalScale, verticalScale)];
-  [cross lineToPoint:relativePointInRect(9.0f, 9.0f, rect, horizontalScale, verticalScale)];
-  [cross moveToPoint:relativePointInRect(9.0f, 4.0f, rect, horizontalScale, verticalScale)];
-  [cross lineToPoint:relativePointInRect(4.0f, 9.0f, rect, horizontalScale, verticalScale)];
-  [cross stroke];
-  [NSGraphicsContext.currentContext restoreGraphicsState];
-}
-
-- (void)_drawRevertShortcutBadgeInRect:(NSRect)rect
-{
-  CGFloat horizontalScale = (rect.size.width / 1.0f);
-  CGFloat verticalScale = (rect.size.height / 1.0f);
-  [NSGraphicsContext.currentContext saveGraphicsState];
-  NSBezierPath *swoosh = [NSBezierPath new];
-  [swoosh setLineWidth:horizontalScale];
-  [swoosh moveToPoint:relativePointInRect(0.0489685f, 0.6181513f, rect, horizontalScale, verticalScale)];
-  [swoosh lineToPoint:relativePointInRect(0.4085750f, 0.9469318f, rect, horizontalScale, verticalScale)];
-  [swoosh lineToPoint:relativePointInRect(0.4085750f, 0.7226146f, rect, horizontalScale, verticalScale)];
-  [swoosh curveToPoint:relativePointInRect(0.8508247f, 0.4836237f, rect, horizontalScale, verticalScale)
-         controlPoint1:relativePointInRect(0.4085750f, 0.7226146f, rect, horizontalScale, verticalScale)
-         controlPoint2:relativePointInRect(0.8371143f, 0.7491841f, rect, horizontalScale, verticalScale)];
-  [swoosh curveToPoint:relativePointInRect(0.5507195f, 0.0530682f, rect, horizontalScale, verticalScale)
-         controlPoint1:relativePointInRect(0.8677834f, 0.1545071f, rect, horizontalScale, verticalScale)
-         controlPoint2:relativePointInRect(0.5507195f, 0.0530682f, rect, horizontalScale, verticalScale)];
-  [swoosh curveToPoint:relativePointInRect(0.7421721f, 0.3391942f, rect, horizontalScale, verticalScale)
-         controlPoint1:relativePointInRect(0.5507195f, 0.0530682f, rect, horizontalScale, verticalScale)
-         controlPoint2:relativePointInRect(0.7458685f, 0.1913146f, rect, horizontalScale, verticalScale)];
-  [swoosh curveToPoint:relativePointInRect(0.4085750f, 0.5154130f, rect, horizontalScale, verticalScale)
-         controlPoint1:relativePointInRect(0.7383412f, 0.4930328f, rect, horizontalScale, verticalScale)
-         controlPoint2:relativePointInRect(0.4085750f, 0.5154130f, rect, horizontalScale, verticalScale)];
-  [swoosh lineToPoint:relativePointInRect(0.4085750f, 0.2654000f, rect, horizontalScale, verticalScale)];
-  [swoosh fill];
-  [NSGraphicsContext.currentContext restoreGraphicsState];
+  NSColor *badgeColor = (_isMouseAboveBadge && _isMouseDown) ? NSColor.secondaryLabelColor : NSColor.tertiaryLabelColor;
+  NSImageSymbolConfiguration *configuration = [[NSImageSymbolConfiguration configurationWithPointSize:kBadgeSize
+                                                                                               weight:NSFontWeightRegular]
+                                               configurationByApplyingConfiguration:[NSImageSymbolConfiguration configurationWithHierarchicalColor:badgeColor]];
+  NSImage *badge = [[NSImage imageWithSystemSymbolName:symbolName accessibilityDescription:nil] imageWithSymbolConfiguration:configuration];
+  NSRect badgeRect = badgeRectInBounds(rect);
+  NSSize badgeImageSize = badge.size;
+  NSRect imageRect = NSMakeRect(NSMidX(badgeRect) - badgeImageSize.width / 2.0f,
+                                NSMidY(badgeRect) - badgeImageSize.height / 2.0f,
+                                badgeImageSize.width,
+                                badgeImageSize.height);
+  [badge drawInRect:imageRect];
 }
 
 - (void)_drawLabelInRect:(NSRect)rect
@@ -314,11 +270,22 @@ static const NSEventModifierFlags kCocoaModifierFlagsMask = (NSEventModifierFlag
 
 - (void)_drawString:(NSString *)string inRect:(NSRect)rect
 {
-  NSMutableDictionary<NSString *, id> *attributes = stringAttributesWithShadow();
-  NSRect labelRect = rect;
-  attributes[NSFontAttributeName] = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
-  attributes[NSForegroundColorAttributeName] = [NSColor blackColor];
-  labelRect.origin.y = -(NSMidY(rect) - [string sizeWithAttributes:attributes].height / 2.0f);
+  BOOL isPrompt = _isRecording || !_shortcut;
+  NSMutableParagraphStyle *paragraphStyle = NSParagraphStyle.defaultParagraphStyle.mutableCopy;
+  paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+  paragraphStyle.alignment = NSTextAlignmentCenter;
+  NSDictionary<NSString *, id> *attributes = @{
+    NSFontAttributeName: [NSFont systemFontOfSize:NSFont.smallSystemFontSize],
+    NSForegroundColorAttributeName: isPrompt ? NSColor.secondaryLabelColor : NSColor.labelColor,
+    NSParagraphStyleAttributeName: paragraphStyle,
+  };
+  // Keep the label clear of the badge when one is shown.
+  CGFloat maxX = (_isRecording || _shortcut) ? NSMinX(badgeRectInBounds(rect)) : NSMaxX(rect) - kLabelPadding;
+  CGFloat labelHeight = [string sizeWithAttributes:attributes].height;
+  NSRect labelRect = NSMakeRect(NSMinX(rect) + kLabelPadding,
+                                NSMidY(rect) - labelHeight / 2.0f,
+                                maxX - NSMinX(rect) - kLabelPadding,
+                                labelHeight);
   [string drawInRect:labelRect withAttributes:attributes];
 }
 
@@ -326,31 +293,11 @@ static NSRect badgeRectInBounds(NSRect bounds)
 {
   NSRect badgeRect;
   NSSize badgeSize;
-  badgeSize.width = 13.0f;
-  badgeSize.height = 13.0f;
-  badgeRect.origin = NSMakePoint(NSMaxX(bounds) - badgeSize.width - 4.0f, floor((NSMaxY(bounds) - badgeSize.height) / 2.0f));
+  badgeSize.width = kBadgeSize + 2.0f;
+  badgeSize.height = kBadgeSize + 2.0f;
+  badgeRect.origin = NSMakePoint(NSMaxX(bounds) - badgeSize.width - 3.0f, floor(NSMidY(bounds) - badgeSize.height / 2.0f));
   badgeRect.size = badgeSize;
   return badgeRect;
-}
-
-static NSMutableDictionary<NSString *, id> *stringAttributesWithShadow(void)
-{
-  NSMutableParagraphStyle *paragraphStyle = NSParagraphStyle.defaultParagraphStyle.mutableCopy;
-  NSShadow *textShadow = [NSShadow new];
-  NSMutableDictionary<NSString *, id> *stringAttributes = [NSMutableDictionary new];
-  paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
-  paragraphStyle.alignment = NSTextAlignmentCenter;
-  textShadow.shadowColor = [NSColor whiteColor];
-  textShadow.shadowOffset = NSMakeSize(0.0f, -1.0);
-  textShadow.shadowBlurRadius = 0.0f;
-  stringAttributes[NSParagraphStyleAttributeName] = paragraphStyle;
-  stringAttributes[NSShadowAttributeName] = textShadow;
-  return stringAttributes;
-}
-
-static NSPoint relativePointInRect(CGFloat x, CGFloat y, CGRect rect, CGFloat horizontalScale, CGFloat verticalScale)
-{
-  return NSMakePoint((x * horizontalScale) + rect.origin.x, (y * verticalScale) + rect.origin.y);
 }
 
 @end

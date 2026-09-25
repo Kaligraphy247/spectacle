@@ -37,7 +37,6 @@
 		2D3A0511194956E100CD96E7 /* SpectacleShortcutTranslations.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A0507194956E100CD96E7 /* SpectacleShortcutTranslations.m */; };
 		2D3A0512194956E100CD96E7 /* SpectacleShortcutValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3A0509194956E100CD96E7 /* SpectacleShortcutValidation.m */; };
 		2D4F3ED014A27B4500C29D11 /* SpectacleScreenDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4F3ECF14A27B4500C29D11 /* SpectacleScreenDetector.m */; };
-		2D5565B1181EDB7F00EFB43A /* Security & Privacy System Preferences.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 2D5565B0181EDB7F00EFB43A /* Security & Privacy System Preferences.scpt */; };
 		2D5783F11BB63BDD00695771 /* SpectacleStandardWindowMover.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5783F01BB63BDD00695771 /* SpectacleStandardWindowMover.m */; };
 		2D58AE341D7D19AF00BFEEA2 /* SpectacleShortcutTranslationsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58AE331D7D19AF00BFEEA2 /* SpectacleShortcutTranslationsSpec.m */; };
 		2D58AE361D7D2D5300BFEEA2 /* SpectacleShortcutSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58AE351D7D2D5300BFEEA2 /* SpectacleShortcutSpec.m */; };
@@ -181,7 +180,6 @@
 		2D3A050A194956E100CD96E7 /* SpectacleShortcutValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpectacleShortcutValidator.h; path = Spectacle/Sources/SpectacleShortcutValidator.h; sourceTree = "<group>"; };
 		2D4F3ECE14A27B4500C29D11 /* SpectacleScreenDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpectacleScreenDetector.h; path = Spectacle/Sources/SpectacleScreenDetector.h; sourceTree = "<group>"; };
 		2D4F3ECF14A27B4500C29D11 /* SpectacleScreenDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpectacleScreenDetector.m; path = Spectacle/Sources/SpectacleScreenDetector.m; sourceTree = "<group>"; };
-		2D5565B0181EDB7F00EFB43A /* Security & Privacy System Preferences.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Security & Privacy System Preferences.scpt"; path = "Spectacle/Resources/Scripts/Security & Privacy System Preferences.scpt"; sourceTree = "<group>"; };
 		2D5783EF1BB63BDD00695771 /* SpectacleStandardWindowMover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpectacleStandardWindowMover.h; path = Spectacle/Sources/SpectacleStandardWindowMover.h; sourceTree = "<group>"; };
 		2D5783F01BB63BDD00695771 /* SpectacleStandardWindowMover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpectacleStandardWindowMover.m; path = Spectacle/Sources/SpectacleStandardWindowMover.m; sourceTree = "<group>"; };
 		2D58AE331D7D19AF00BFEEA2 /* SpectacleShortcutTranslationsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpectacleShortcutTranslationsSpec.m; path = Sources/SpectacleShortcutTranslationsSpec.m; sourceTree = "<group>"; };
@@ -319,7 +317,6 @@
 			children = (
 				2D5CCCE715E96F4F0009CC43 /* Certificates */,
 				0747DAEB1183AAE700F75DD2 /* Property Lists */,
-				2DB2DC22181ECFCF0008A192 /* Scripts */,
 				2DC4E3CA1AD84E5C0022ABF0 /* Credits.rtf */,
 				2DA23EFB1B7D736100C9E8EF /* Images.xcassets */,
 				2DC4E3CC1AD84E5C0022ABF0 /* InfoPlist.strings */,
@@ -484,14 +481,6 @@
 			name = "Window Movers";
 			sourceTree = "<group>";
 		};
-		2DB2DC22181ECFCF0008A192 /* Scripts */ = {
-			isa = PBXGroup;
-			children = (
-				2D5565B0181EDB7F00EFB43A /* Security & Privacy System Preferences.scpt */,
-			);
-			name = Scripts;
-			sourceTree = "<group>";
-		};
 		2DC8A0111B84E17400ABEBD5 /* Shortcut Management */ = {
 			isa = PBXGroup;
 			children = (
@@ -652,7 +641,6 @@
 				2DA23EFC1B7D736100C9E8EF /* Images.xcassets in Resources */,
 				2DC4E3D51AD84E5C0022ABF0 /* InfoPlist.strings in Resources */,
 				2DC4E3D61AD84E5C0022ABF0 /* Localizable.strings in Resources */,
-				2D5565B1181EDB7F00EFB43A /* Security & Privacy System Preferences.scpt in Resources */,
 				2D7752101B83E94C00C022EE /* Spectacle.xib in Resources */,
 				2D7752111B83E95000C022EE /* SpectaclePreferencesWindow.xib in Resources */,
 				2D58CC391C7030B800E3DC74 /* Window Position Calculations in Resources */,

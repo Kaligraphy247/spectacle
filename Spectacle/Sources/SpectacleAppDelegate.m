@@ -273,14 +273,10 @@
 
 - (IBAction)openSystemPreferences:(id)sender
 {
-  NSURL *preferencePaneURL = [NSURL fileURLWithPath:[SpectacleUtilities pathForPreferencePaneNamed:@"Security"]];
-  NSBundle *applicationBundle = NSBundle.mainBundle;
-  NSURL *scriptURL = [applicationBundle URLForResource:@"Security & Privacy System Preferences" withExtension:@"scpt"];
+  NSURL *accessibilitySettingsURL = [NSURL URLWithString:@"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"];
   [[NSApplication sharedApplication] stopModal];
   [self.accessiblityAccessDialogWindow orderOut:self];
-  if (![[[NSAppleScript alloc] initWithContentsOfURL:scriptURL error:nil] executeAndReturnError:nil]) {
-    [[NSWorkspace sharedWorkspace] openURL:preferencePaneURL];
-  }
+  [[NSWorkspace sharedWorkspace] openURL:accessibilitySettingsURL];
 }
 
 - (void)dealloc

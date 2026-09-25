@@ -61,25 +61,4 @@
   }
 }
 
-+ (NSString *)pathForPreferencePaneNamed:(NSString *)preferencePaneName
-{
-  NSArray<NSString *> *paths = NSSearchPathForDirectoriesInDomains(NSPreferencePanesDirectory, NSAllDomainsMask, YES);
-  NSFileManager *fileManager = NSFileManager.defaultManager;
-  NSString *preferencePanePath = nil;
-  if (preferencePaneName) {
-    preferencePaneName = [preferencePaneName stringByAppendingString:@".prefPane"];
-    for (__strong NSString *path in paths) {
-      path = [path stringByAppendingPathComponent:preferencePaneName];
-      if (path && [fileManager fileExistsAtPath:path isDirectory:nil]) {
-        preferencePanePath = path;
-        break;
-      }
-    }
-    if (!preferencePanePath) {
-      NSLog(@"There was a problem obtaining the path for the specified preference pane: %@", preferencePaneName);
-    }
-  }
-  return preferencePanePath;
-}
-
 @end

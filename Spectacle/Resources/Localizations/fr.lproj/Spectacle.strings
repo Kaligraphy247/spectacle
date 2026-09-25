@@ -66,7 +66,7 @@
 "huV-Gw-lbX.title" = "Moitié bas";
 
 /* Class = "NSButtonCell"; title = "Open System Preferences"; ObjectID = "iPl-AT-Pei"; */
-"iPl-AT-Pei.title" = "Ouvrir Préférences Système";
+"iPl-AT-Pei.title" = "Ouvrir Réglages Système";
 
 /* Class = "NSMenuItem"; title = "Undo"; ObjectID = "l9O-0B-fjp"; */
 "l9O-0B-fjp.title" = "Annuler";
@@ -84,7 +84,7 @@
 "qpo-5w-ZIY.title" = "pour 1 heure";
 
 /* Class = "NSTextFieldCell"; title = "Grant access to this application in System Preferences."; ObjectID = "ruu-yJ-Q1F"; */
-"ruu-yJ-Q1F.title" = "Accorder l'accès à cette application dans les Préférences Système.";
+"ruu-yJ-Q1F.title" = "Accorder l'accès à cette application dans les Réglages Système.";
 
 /* Class = "NSMenuItem"; title = "Center"; ObjectID = "xJu-Uo-nZw"; */
 "xJu-Uo-nZw.title" = "Centrer";

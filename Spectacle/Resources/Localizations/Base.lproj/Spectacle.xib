@@ -202,45 +202,39 @@
             </connections>
         </menu>
         <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="aH5-eW-ySa" propertyAccessControl="none">
-            <rect key="contentRect" x="422" y="199" width="780" height="360"/>
+            <rect key="contentRect" x="422" y="199" width="440" height="262"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
-            <value key="minSize" type="size" width="780" height="360"/>
-            <value key="maxSize" type="size" width="780" height="360"/>
+            <value key="minSize" type="size" width="440" height="262"/>
+            <value key="maxSize" type="size" width="440" height="262"/>
             <view key="contentView" id="wR6-GU-kdb">
-                <rect key="frame" x="0.0" y="0.0" width="780" height="360"/>
+                <rect key="frame" x="0.0" y="0.0" width="440" height="262"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="q8H-wi-KU2">
-                        <rect key="frame" x="129" y="321" width="522" height="17"/>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="he4-Bj-XB4" propertyAccessControl="localizable">
+                        <rect key="frame" x="188" y="178" width="64" height="64"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Spectacle would like to control your windows using accessibility features." id="HRo-tn-M1V">
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSApplicationIcon" id="zQN-Oe-PPv"/>
+                    </imageView>
+                    <textField verticalHuggingPriority="750" id="q8H-wi-KU2">
+                        <rect key="frame" x="30" y="122" width="380" height="40"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Spectacle would like to control your windows using accessibility features." id="HRo-tn-M1V">
                             <font key="font" metaFont="systemBold"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="MM0-lm-06Y">
-                        <rect key="frame" x="129" y="295" width="522" height="17"/>
+                    <textField verticalHuggingPriority="750" id="MM0-lm-06Y">
+                        <rect key="frame" x="30" y="72" width="380" height="42"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Grant access to this application in System Preferences." id="ruu-yJ-Q1F">
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Grant access to Spectacle in System Settings › Privacy &amp; Security › Accessibility." id="ruu-yJ-Q1F">
                             <font key="font" metaFont="smallSystem"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" id="9dg-wQ-O5z">
-                        <rect key="frame" x="213" y="251" width="212" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Open System Preferences" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iPl-AT-Pei">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <connections>
-                                <action selector="openSystemPreferences:" target="tMJ-JP-XRD" id="xfa-vh-epH"/>
-                            </connections>
-                        </buttonCell>
-                    </button>
                     <button verticalHuggingPriority="750" id="nIS-kz-1R7">
-                        <rect key="frame" x="425" y="251" width="147" height="32"/>
+                        <rect key="frame" x="52" y="13" width="150" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Quit Spectacle" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gMV-vD-CUe">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -250,16 +244,25 @@
                             <action selector="terminate:" target="-2" id="bAO-EW-SfZ"/>
                         </connections>
                     </button>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="he4-Bj-XB4" propertyAccessControl="localizable">
-                        <rect key="frame" x="-27" y="-383" width="835" height="653"/>
+                    <button verticalHuggingPriority="750" id="9dg-wQ-O5z">
+                        <rect key="frame" x="214" y="13" width="162" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="Security &amp; Privacy" id="zQN-Oe-PPv"/>
-                    </imageView>
+                        <buttonCell key="cell" type="push" title="Open System Settings" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iPl-AT-Pei">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                            <connections>
+                                <action selector="openSystemPreferences:" target="tMJ-JP-XRD" id="xfa-vh-epH"/>
+                            </connections>
+                        </buttonCell>
+                    </button>
                 </subviews>
             </view>
         </window>
     </objects>
     <resources>
-        <image name="Security &amp; Privacy" width="780" height="654"/>
+        <image name="NSApplicationIcon" width="32" height="32"/>
     </resources>
 </document>
