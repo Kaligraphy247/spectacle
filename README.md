@@ -4,6 +4,23 @@
 
 Easily organize windows without using a mouse.
 
+## About this fork (`arm64-port` branch)
+
+A port of Spectacle 1.2 that builds natively for Apple Silicon (universal arm64 + x86_64) with current Xcode, so it no longer depends on Rosetta.
+
+- Requires macOS 13 or later.
+- Sparkle and the "Check for Updates…" menu item are removed; the original update feed is gone.
+- "Launch Spectacle at login" uses `SMAppService`; the previous API stopped working in macOS 13.
+- Fixes shortcut fields drawing over the whole preferences window when built against the macOS 14+ SDK.
+
+To build and install into `/Applications`:
+
+```sh
+./install.sh
+```
+
+If an Apple Development certificate is in your keychain, `install.sh` signs with it (via the git-ignored `Configurations/Signing.local.xcconfig`), so macOS keeps the Accessibility permission across rebuilds. Otherwise the app is ad-hoc signed and the permission has to be granted again after each build.
+
 ## Important Note
 
 **This project is not being actively maintained.** Unfortunately, after almost a decade of on-and-off development I can no longer dedicate the time needed to be a responsible maintainer of this project. Spectacle will remain available for download but please use at your own risk. The source code will continue to be free and open to anyone, so feel free to make Spectacle your own.

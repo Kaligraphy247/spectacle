@@ -19,3 +19,6 @@ DerivedData
 
 Carthage/Build
 Carthage/Checkouts
+
+# Local signing identity (see Configurations/Signing.xcconfig)
+Configurations/Signing.local.xcconfig

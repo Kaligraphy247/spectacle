@@ -1,0 +1,16 @@
+// Code signing for the Spectacle app target.
+//
+// Defaults to ad-hoc signing so the project builds for anyone. Ad-hoc signatures change on every build,
+// which makes macOS forget the Accessibility permission each time. To keep it across rebuilds, sign with
+// a stable identity by creating Configurations/Signing.local.xcconfig (git-ignored), e.g.:
+//
+//   CODE_SIGN_STYLE = Manual
+//   CODE_SIGN_IDENTITY = Apple Development
+//   DEVELOPMENT_TEAM = <your team id>
+//
+// install.sh creates that file automatically when an Apple Development certificate is in your keychain.
+
+CODE_SIGN_STYLE = Manual
+CODE_SIGN_IDENTITY = -
+
+#include? "Signing.local.xcconfig"

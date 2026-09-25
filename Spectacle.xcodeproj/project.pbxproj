@@ -114,6 +114,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5B1C0A0E2F2E4A0000C0FFEE /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Signing.xcconfig; path = Configurations/Signing.xcconfig; sourceTree = "<group>"; };
 		0706C0431191092B0068F04B /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Defaults.plist; path = "Spectacle/Resources/Property Lists/Defaults.plist"; sourceTree = "<group>"; };
 		072EACFE118A4D5A0015FC8A /* SpectacleWindowPositionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SpectacleWindowPositionManager.h; path = Spectacle/Sources/SpectacleWindowPositionManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		072EACFF118A4D5A0015FC8A /* SpectacleWindowPositionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SpectacleWindowPositionManager.m; path = Spectacle/Sources/SpectacleWindowPositionManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -298,6 +299,7 @@
 		089C166AFE841209C02AAC07 /* Spectacle */ = {
 			isa = PBXGroup;
 			children = (
+				5B1C0A0E2F2E4A0000C0FFEE /* Signing.xcconfig */,
 				2D89B5731B8133E900F9FC1C /* Spectacle */,
 				2DA5B7C719F8BA79007EDE8E /* SpectacleSpecs */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
@@ -930,9 +932,9 @@
 		};
 		2D1E1ACC147E06AD0021D73D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B1C0A0E2F2E4A0000C0FFEE /* Signing.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Spectacle;
-				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Spectacle/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -943,9 +945,9 @@
 		};
 		2D1E1ACD147E06AD0021D73D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B1C0A0E2F2E4A0000C0FFEE /* Signing.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Spectacle;
-				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Spectacle/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
