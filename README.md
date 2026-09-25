@@ -10,7 +10,7 @@ A port of Spectacle 1.2 that builds natively for Apple Silicon (universal arm64 
 - Fixes shortcut fields drawing over the whole preferences window when built against the macOS 14+ SDK.
 - Small UI touch-ups: the shortcut fields, buttons and Accessibility prompt use native macOS styling and follow light and dark mode, and the prompt opens System Settings › Accessibility directly.
 - The About panel points to this fork for newer versions; the original credits are unchanged.
-- Versioned as `1.3|arm64` to tell it apart from the original 1.2.
+- Versioned as `1.3-arm64` to tell it apart from the original 1.2.
 
 To build and install into `/Applications`:
 
