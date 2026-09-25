@@ -2,9 +2,9 @@
 
 @interface SpectacleLoginItemHelper : NSObject
 
-+ (BOOL)isLoginItemEnabledForBundle:(NSBundle *)bundle;
++ (BOOL)isLoginItemEnabled;
 
-+ (void)enableLoginItemForBundle:(NSBundle *)bundle;
-+ (void)disableLoginItemForBundle:(NSBundle *)bundle;
++ (void)enableLoginItem;
++ (void)disableLoginItem;
 
 @end

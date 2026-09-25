@@ -1,78 +1,30 @@
+#import <ServiceManagement/ServiceManagement.h>
+
 #import "SpectacleLoginItemHelper.h"
 
 @implementation SpectacleLoginItemHelper
 
-+ (BOOL)isLoginItemEnabledForBundle:(NSBundle *)bundle
++ (BOOL)isLoginItemEnabled
 {
-  LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-  NSString *applicationPath = bundle.bundlePath;
-  BOOL result = NO;
-  if (sharedFileList) {
-    UInt32 seedValue;
-    NSArray *sharedFileListArray = CFBridgingRelease(LSSharedFileListCopySnapshot(sharedFileList, &seedValue));
-    for (id sharedFile in sharedFileListArray) {
-      LSSharedFileListItemRef sharedFileListItem = (__bridge LSSharedFileListItemRef)sharedFile;
-      CFURLRef applicationPathURL = NULL;
-      LSSharedFileListItemResolve(sharedFileListItem, 0, (CFURLRef *)&applicationPathURL, NULL);
-      if (applicationPathURL != NULL) {
-        NSString *resolvedApplicationPath = [(__bridge NSURL *)applicationPathURL path];
-        CFRelease(applicationPathURL);
-        if ([resolvedApplicationPath compare:applicationPath] == NSOrderedSame) {
-          result = YES;
-          break;
-        }
-      }
-    }
-    CFRelease(sharedFileList);
-  } else {
-    NSLog(@"Unable to create the shared file list.");
-  }
-  return result;
+  return SMAppService.mainAppService.status == SMAppServiceStatusEnabled;
 }
 
-+ (void)enableLoginItemForBundle:(NSBundle *)bundle
++ (void)enableLoginItem
 {
-  LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-  NSString *applicationPath = bundle.bundlePath;
-  NSURL *applicationPathURL = [NSURL fileURLWithPath:applicationPath];
-  if (sharedFileList) {
-    LSSharedFileListItemRef sharedFileListItem = LSSharedFileListInsertItemURL(sharedFileList,
-                                                                               kLSSharedFileListItemLast,
-                                                                               NULL,
-                                                                               NULL,
-                                                                               (__bridge CFURLRef)applicationPathURL,
-                                                                               NULL,
-                                                                               NULL);
-    if (sharedFileListItem) {
-      CFRelease(sharedFileListItem);
-    }
-    CFRelease(sharedFileList);
-  } else {
-    NSLog(@"Unable to create the shared file list.");
+  NSError *error = nil;
+  if (![SMAppService.mainAppService registerAndReturnError:&error]) {
+    NSLog(@"Unable to register the login item: %@", error);
+  }
+  if (SMAppService.mainAppService.status == SMAppServiceStatusRequiresApproval) {
+    [SMAppService openSystemSettingsLoginItems];
   }
 }
 
-+ (void)disableLoginItemForBundle:(NSBundle *)bundle
++ (void)disableLoginItem
 {
-  LSSharedFileListRef sharedFileList = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-  NSString *applicationPath = bundle.bundlePath;
-  if (sharedFileList) {
-    UInt32 seedValue;
-    NSArray *sharedFileListArray = CFBridgingRelease(LSSharedFileListCopySnapshot(sharedFileList, &seedValue));
-    for (id sharedFile in sharedFileListArray) {
-      LSSharedFileListItemRef sharedFileListItem = (__bridge LSSharedFileListItemRef)sharedFile;
-      CFURLRef applicationPathURL;
-      if (LSSharedFileListItemResolve(sharedFileListItem, 0, &applicationPathURL, NULL) == noErr) {
-        NSString *resolvedApplicationPath = [(__bridge NSURL *)applicationPathURL path];
-        if ([resolvedApplicationPath compare:applicationPath] == NSOrderedSame) {
-          LSSharedFileListItemRemove(sharedFileList, sharedFileListItem);
-        }
-        CFRelease(applicationPathURL);
-      }
-    }
-    CFRelease(sharedFileList);
-  } else {
-    NSLog(@"Unable to create the shared file list.");
+  NSError *error = nil;
+  if (![SMAppService.mainAppService unregisterAndReturnError:&error]) {
+    NSLog(@"Unable to unregister the login item: %@", error);
   }
 }
 

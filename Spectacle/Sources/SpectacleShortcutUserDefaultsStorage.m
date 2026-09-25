@@ -23,7 +23,7 @@
 {
   NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
   for (SpectacleShortcut *shortcut in shortcuts) {
-    NSData *shortcutData = [NSKeyedArchiver archivedDataWithRootObject:shortcut];
+    NSData *shortcutData = [NSKeyedArchiver archivedDataWithRootObject:shortcut requiringSecureCoding:NO error:NULL];
     NSString *shortcutName = shortcut.shortcutName;
     if (![shortcutData isEqualToData:[userDefaults dataForKey:shortcutName]]) {
       [userDefaults setObject:shortcutData forKey:shortcutName];
@@ -65,7 +65,10 @@
 {
   NSMutableArray<SpectacleShortcut *> *shortcuts = [NSMutableArray new];
   for (NSData *shortcutData in dictionary.allValues) {
-    SpectacleShortcut *shortcut = [NSKeyedUnarchiver unarchiveObjectWithData:shortcutData];
+    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingFromData:shortcutData error:NULL];
+    unarchiver.requiresSecureCoding = NO;
+    SpectacleShortcut *shortcut = [unarchiver decodeObjectForKey:NSKeyedArchiveRootObjectKey];
+    [unarchiver finishDecoding];
     [shortcuts addObject:[shortcut copyWithShortcutAction:action]];
   }
   return shortcuts;

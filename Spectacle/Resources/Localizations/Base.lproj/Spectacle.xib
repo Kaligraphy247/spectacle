@@ -39,19 +39,12 @@
                 <outlet property="undoLastMoveShortcutMenuItem" destination="l9O-0B-fjp" id="gns-Zw-ZVc"/>
             </connections>
         </customObject>
-        <customObject id="qZ6-IG-VBZ" customClass="SUUpdater"/>
         <menu title="Spectacle Status Item" id="KsA-8w-wcl" propertyAccessControl="localizable">
             <items>
                 <menuItem title="About Spectacle" tag="-1" id="EA9-dx-Qfg">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="orderFrontStandardAboutPanel:" target="-2" id="P8D-am-ldh"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Check for Updates..." tag="-1" id="2sj-vF-eSL">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="checkForUpdates:" target="qZ6-IG-VBZ" id="cII-hj-ws3"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="880"/>

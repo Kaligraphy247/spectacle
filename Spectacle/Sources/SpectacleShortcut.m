@@ -169,10 +169,10 @@
 
 + (BOOL)validCocoaModifiers:(NSUInteger)modifiers
 {
-  return ((modifiers & NSAlternateKeyMask)
-          || (modifiers & NSCommandKeyMask)
-          || (modifiers & NSControlKeyMask)
-          || (modifiers & NSShiftKeyMask));
+  return ((modifiers & NSEventModifierFlagOption)
+          || (modifiers & NSEventModifierFlagCommand)
+          || (modifiers & NSEventModifierFlagControl)
+          || (modifiers & NSEventModifierFlagShift));
 }
 
 @end
