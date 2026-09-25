@@ -140,8 +140,15 @@ static const NSEventModifierFlags kCocoaModifierFlagsMask = (NSEventModifierFlag
   [self setNeedsDisplay:YES];
 }
 
-- (void)drawRect:(NSRect)rect
+- (BOOL)clipsToBounds
 {
+  return YES;
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+  // Since the macOS 14 SDK the dirty rect may extend past the view, so the pill is drawn from the bounds.
+  NSRect rect = self.bounds;
   CGFloat radius = NSHeight(rect) / 2.0f;
   [self _drawBorderInRect:rect withRadius:radius];
   [self _drawBackgroundInRect:rect withRadius:radius];
