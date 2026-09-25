@@ -1,9 +1,5 @@
 # Spectacle
 
-[![Build Status](https://travis-ci.org/eczarny/spectacle.svg?branch=master)](https://travis-ci.org/eczarny/spectacle)
-
-Easily organize windows without using a mouse.
-
 ## About this fork (`arm64-port` branch)
 
 A port of Spectacle 1.2 that builds natively for Apple Silicon (universal arm64 + x86_64) with current Xcode, so it no longer depends on Rosetta.
@@ -12,6 +8,9 @@ A port of Spectacle 1.2 that builds natively for Apple Silicon (universal arm64 
 - Sparkle and the "Check for Updates…" menu item are removed; the original update feed is gone.
 - "Launch Spectacle at login" uses `SMAppService`; the previous API stopped working in macOS 13.
 - Fixes shortcut fields drawing over the whole preferences window when built against the macOS 14+ SDK.
+- Small UI touch-ups: the shortcut fields, buttons and Accessibility prompt use native macOS styling and follow light and dark mode, and the prompt opens System Settings › Accessibility directly.
+- The About panel points to this fork for newer versions; the original credits are unchanged.
+- Versioned as `1.3|arm64` to tell it apart from the original 1.2.
 
 To build and install into `/Applications`:
 
@@ -20,6 +19,11 @@ To build and install into `/Applications`:
 ```
 
 If an Apple Development certificate is in your keychain, `install.sh` signs with it (via the git-ignored `Configurations/Signing.local.xcconfig`), so macOS keeps the Accessibility permission across rebuilds. Otherwise the app is ad-hoc signed and the permission has to be granted again after each build.
+
+---
+[![Build Status](https://travis-ci.org/eczarny/spectacle.svg?branch=master)](https://travis-ci.org/eczarny/spectacle)
+
+Easily organize windows without using a mouse.
 
 ## Important Note
 
